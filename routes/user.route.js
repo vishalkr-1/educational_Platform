@@ -65,6 +65,12 @@ userRouter.post(
   handleLogin
 );
 
+// **********************************************************************
+// logout
+userRouter.post("/logout", function hadleLogout(req, res) {
+  res.clearCookie("uid"); // Clear the JWT cookie
+  res.status(200).send("Logged out successfully");
+});
 // userRouter.get('/home',homeHandle)
 module.exports = {
   userRouter,

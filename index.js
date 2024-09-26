@@ -29,6 +29,7 @@ app.use("/lesson", lessonRouter);
 
 const { searchRouter } = require("./routes/search.route");
 app.use("/search", searchRouter);
+
 const connection = require("./dbConnection/db");
 app.listen(port, async () => {
   try {
