@@ -1,8 +1,8 @@
-# Educational Platform
+# course Management
 
 ## Description
 
-The Educational Platform is a web application designed for users to create, manage, and access educational courses and lessons. Users must sign up and log in to utilize the platform's features. The platform includes course and lesson management functionalities, a search feature to find users, courses, and lessons, and leverages Redis for quick data retrieval.
+The course Management is a web application designed for users to create, manage, and access educational courses and lessons. Users must sign up and log in to utilize the platform's features. The platform includes course and lesson management functionalities, a search feature to find users, courses, and lessons, and leverages Redis for quick data retrieval.
 
 First, the user will sign up, and after all validations are successfully checked, the user will be redirected to the login page, where authentication will take place. After logging in, a JWT token will be generated, which will be stored in cookies. Then, when the user is redirected to the home page, their verification will be done using the JWT token from the cookies. After that, the user can add, view, update (patch), or delete courses and perform CRUD operations with lessons as well. However, whenever a GET operation is performed, the data will first be fetched from the Redis server. If the data is found there, it will be returned to the user. If not, the request will go to the controller, where the data will be fetched from the database and also stored in the Redis server for faster access next time. The data in the Redis server will expire every 1 minute, so any updates made in the database will also reflect in the Redis server. Lastly, there’s a search endpoint that allows the user to search by their name, search for courses by title, and search for lessons by their title.user also able to logout itself.
 
