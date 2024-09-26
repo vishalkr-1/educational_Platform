@@ -1,17 +1,21 @@
-const jwt = require('jsonwebtoken')
-const secretKey="vishal$123$"
+const jwt = require("jsonwebtoken");
+const secretKey = "vishal$123$";
 function setUser(user) {
-    return jwt.sign({
-        _UserID: user._id,
-        email:user.email
-    },secretKey)
-    
+  return jwt.sign(
+    {
+      _UserID: user._id,
+      email: user.email,
+    },
+    secretKey
+  );
 }
+// ******************************************************
+// ______________________________________________________________
 function getUser(token) {
-    if (!token) return null
-    return jwt.verify(token,secretKey)
+  if (!token) return null;
+  return jwt.verify(token, secretKey);
 }
 module.exports = {
-    setUser,
-    getUser
-}
+  setUser,
+  getUser,
+};

@@ -118,13 +118,6 @@ async function handleUpdateSelfLessons(req, res) {
   } catch (err) {
     return res.status(401).send({ msg: "Invalid token. Please log in again." });
   }
-
-  // const courseID = req.cookies.newCourse?._id;
-
-  // if (!courseID) {
-  //   return res.status(400).send({ msg: "Course ID not found in cookies." });
-  // }
-
   const { lessonID } = req.params;
   console.log(lessonID);
   const payload = req.body;
