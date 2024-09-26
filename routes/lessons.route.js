@@ -10,6 +10,9 @@ const {
 const { restrictToLoggedInUserOnlyLesson } = require("../middleware/lesson");
 
 const lessonRouter = express.Router();
+
+// ************************************************************************************
+// add lesson
 lessonRouter.post(
   "/add",
   [body("title").notEmpty(), body("content").notEmpty()],
@@ -18,10 +21,15 @@ lessonRouter.post(
   handleAdd
 );
 
+// ***************************************************************************
+
 const {
   allLessonCache,
   selfLessonCache,
 } = require("../caching/lesson.caching");
+
+// ************************************************************************
+// get all lessons
 lessonRouter.get(
   "/",
   restrictToLoggedInUserOnly,
@@ -29,17 +37,22 @@ lessonRouter.get(
   handleAllLesson
 );
 
+// ******************************************************************************************
+// get own lesson
 lessonRouter.get(
   "/selfLesson/:courseID",
   restrictToLoggedInUserOnly,
   selfLessonCache,
   handleSelfLessons
 );
+// *****************************************************************************************************
+// update lesson
 lessonRouter.patch(
   "/selfLesson/update/:lessonID",
   restrictToLoggedInUserOnly,
   handleUpdateSelfLessons
 );
+// **************************************************************************************************************
 
 module.exports = {
   lessonRouter,

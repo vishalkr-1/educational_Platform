@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const { redis } = require("../client");
 const { setCourseUser } = require("../service/container");
 const { validationResult } = require("express-validator");
+// ******************************************************************************************
 //post course
+
 async function handleCourse(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -30,14 +32,14 @@ async function handleCourse(req, res) {
       sameSite: "strict",
     };
     res.cookie("newCourse", courseToken, cookieOptions);
-
+    console.log("course added");
     return res.status(200).redirect(`/static/lesson`);
   } catch (err) {
     console.log(err);
     return res.status(400).send({ msg: err.message });
   }
 }
-
+// ****************************************************************************************************
 // get all course
 async function handleAllCourses(req, res) {
   const cacheKey = "all_courses";
@@ -47,7 +49,7 @@ async function handleAllCourses(req, res) {
     if (!allCourse) {
       return res.status(400).send({ msg: "no any courses" });
     }
-    console.log(allCourse);
+    // console.log(allCourse);
     if (allCourse) {
       await redis
         .set(cacheKey, JSON.stringify(allCourse), "ex", 30)
@@ -62,7 +64,7 @@ async function handleAllCourses(req, res) {
     return res.status(400).send({ msg: err.message });
   }
 }
-
+// ********************************************************************************************************
 // get self only course
 async function handleSelfCourses(req, res) {
   const cacheSelf = "self_course";
@@ -89,7 +91,8 @@ async function handleSelfCourses(req, res) {
     return res.status(400).send({ msg: err.message });
   }
 }
-
+// *****************************************************************************************************
+// handle updtae
 async function handleUpdateSelfCourses(req, res) {
   const token = req.cookies.uid;
   const decoded = jwt.verify(token, "vishal$123$");
@@ -104,9 +107,10 @@ async function handleUpdateSelfCourses(req, res) {
         payload,
         { new: true }
       );
-      console.log(updatedCourse);
+      // console.log(updatedCourse);
 
       if (updatedCourse) {
+        console.log("course is updated");
         return res.status(200).send(updatedCourse);
       } else {
         return res
@@ -121,6 +125,8 @@ async function handleUpdateSelfCourses(req, res) {
     return res.status(400).send({ msg: err.message });
   }
 }
+// ****************************************************************************************************
+// delete course
 async function handleDeleteSelfCourses(req, res) {
   const token = req.cookies.uid;
   const decoded = jwt.verify(token, "vishal$123$");
@@ -134,6 +140,7 @@ async function handleDeleteSelfCourses(req, res) {
       });
 
       if (deletedCourse) {
+        console.log("delete success");
         return res.status(200).send({ msg: "Course deleted successfully." });
       } else {
         return res

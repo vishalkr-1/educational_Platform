@@ -4,6 +4,8 @@ const { getUser } = require("../service/auth");
 const { getCourseUser } = require("../service/container");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+// ******************************************************************************************************
+// lesson  add
 
 async function handleAdd(req, res) {
   const errors = validationResult(req);
@@ -37,6 +39,9 @@ async function handleAdd(req, res) {
   }
 }
 
+// **********************************************************************************************************
+// find all lesson
+
 async function handleAllLesson(req, res) {
   const cacheAllLesson_key = "all_lesson";
   try {
@@ -58,6 +63,8 @@ async function handleAllLesson(req, res) {
     return res.status(400).send({ msg: err.message });
   }
 }
+// *********************************************************************************************************
+// get self lesson
 
 async function handleSelfLessons(req, res) {
   console.log("handleselfcontroller");
@@ -70,7 +77,7 @@ async function handleSelfLessons(req, res) {
     }
     const user = getUser(userToken);
     console.log(user);
-    console.log(user._UserID);
+    console.log(user._id);
     const courseID = req.params.courseID;
     console.log(courseID);
     // Assuming lessons are stored with a courseId field
@@ -93,6 +100,8 @@ async function handleSelfLessons(req, res) {
     return res.status(500).send({ msg: err.message });
   }
 }
+// ***********************************************************************************************
+//update lesson
 
 async function handleUpdateSelfLessons(req, res) {
   const token = req.cookies.uid;
@@ -110,11 +119,11 @@ async function handleUpdateSelfLessons(req, res) {
     return res.status(401).send({ msg: "Invalid token. Please log in again." });
   }
 
-  const courseID = req.cookies.newCourse?._id;
+  // const courseID = req.cookies.newCourse?._id;
 
-  if (!courseID) {
-    return res.status(400).send({ msg: "Course ID not found in cookies." });
-  }
+  // if (!courseID) {
+  //   return res.status(400).send({ msg: "Course ID not found in cookies." });
+  // }
 
   const { lessonID } = req.params;
   console.log(lessonID);
@@ -123,7 +132,7 @@ async function handleUpdateSelfLessons(req, res) {
   try {
     const existingLesson = await lessonModel.findOne({
       _id: lessonID,
-      courseID: courseID,
+      userID: decoded._UserID,
     });
     if (!existingLesson) {
       return res
@@ -133,12 +142,13 @@ async function handleUpdateSelfLessons(req, res) {
 
     // Now update
     const updatedLesson = await lessonModel.findOneAndUpdate(
-      { _id: lessonID, courseID: courseID },
+      { _id: lessonID, userID: decoded._UserID },
       payload,
       { new: true }
     );
 
     if (updatedLesson) {
+      console.log("lesson updated");
       return res.status(200).send(updatedLesson); // Send the updated lesson
     } else {
       return res

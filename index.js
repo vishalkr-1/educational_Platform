@@ -8,7 +8,7 @@ app.get("/server", (req, res) => {
   res.status(200).send("route is working");
 });
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 var cookieParser = require("cookie-parser");
 app.use(cookieParser());
 

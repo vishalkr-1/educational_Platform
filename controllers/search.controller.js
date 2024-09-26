@@ -2,6 +2,9 @@ const { courseModel } = require("../model/courses.model");
 const { lessonModel } = require("../model/lessons.model");
 const { userModel } = require("../model/registration.model");
 
+// ***************************************************************************
+// search functionality
+
 async function handleSearch(req, res) {
   console.log("handle search");
 

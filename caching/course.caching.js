@@ -10,8 +10,8 @@ const courseCacheMiddleware = (req, res, next) => {
       console.error("Redis error:", err);
       return next();
     }
-    console.log("inside courseCacheMiddleware");
-    console.log(data);
+    // console.log("inside courseCacheMiddleware");
+    // console.log(data);
 
     if (data !== null) {
       console.log("Cache hit");

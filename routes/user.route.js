@@ -4,6 +4,10 @@ const { handleSignup, handleLogin } = require("../controllers/user.controller");
 const { body } = require("express-validator");
 const { userModel } = require("../model/registration.model");
 const userRouter = express.Router();
+
+// ****************************************************************************************************************
+// create a new user
+
 userRouter.post(
   "/signup",
   [
@@ -33,6 +37,11 @@ userRouter.post(
   ],
   handleSignup
 );
+
+// ******************************************************************************************************************
+// ====================================================================================================================
+
+// login authentication
 
 userRouter.post(
   "/login",

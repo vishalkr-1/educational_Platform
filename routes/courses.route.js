@@ -10,6 +10,10 @@ const {
 } = require("../controllers/course.controller");
 const courseRouter = express.Router();
 
+// *************************************************************************************
+
+// create course
+
 courseRouter.post(
   "/add",
   [
@@ -20,6 +24,9 @@ courseRouter.post(
   restrictToLoggedInUserOnly,
   handleCourse
 );
+
+// *************************************************************************************************
+// get all course
 
 const {
   courseCacheMiddleware,
@@ -32,6 +39,9 @@ courseRouter.get(
   handleAllCourses
 );
 
+// ******************************************************************************************************
+// get own course
+
 courseRouter.get(
   "/selfCourses",
   restrictToLoggedInUserOnly,
@@ -39,16 +49,24 @@ courseRouter.get(
   handleSelfCourses
 );
 
+// *******************************************************************************************************
+// update the course
 courseRouter.patch(
   "/selfCourses/update/:courseID",
   restrictToLoggedInUserOnly,
   handleUpdateSelfCourses
 );
+
+// ***********************************************************************************************************
+// delete course
+
 courseRouter.delete(
   "/delete/:courseID",
   restrictToLoggedInUserOnly,
   handleDeleteSelfCourses
 );
+
+// ****************************************************************************************************************
 module.exports = {
   courseRouter,
 };
