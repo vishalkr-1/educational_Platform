@@ -52,7 +52,7 @@ async function handleAllCourses(req, res) {
     // console.log(allCourse);
     if (allCourse) {
       await redis
-        .set(cacheKey, JSON.stringify(allCourse), "ex", 30)
+        .set(cacheKey, JSON.stringify(allCourse), "ex", 60)
         .catch((err) => {
           return res.status(400).send(err);
         }); // Cache for 30 seconds
@@ -76,7 +76,7 @@ async function handleSelfCourses(req, res) {
       console.log("inside handle self course", courses);
       if (courses) {
         await redis
-          .set(cacheSelf, JSON.stringify(courses), "ex", 15)
+          .set(cacheSelf, JSON.stringify(courses), "ex", 60)
           .catch((err) => {
             return res.status(400).send({ msg: err.message });
           });

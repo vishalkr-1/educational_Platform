@@ -52,7 +52,7 @@ async function handleAllLesson(req, res) {
     if (allLesson) {
       console.log("handle All lessonAllLesson", allLesson);
       await redis
-        .set(cacheAllLesson_key, JSON.stringify(allLesson), "ex", 30)
+        .set(cacheAllLesson_key, JSON.stringify(allLesson), "ex", 60)
         .catch((err) => {
           return res.status(400).send(err);
         });
@@ -88,7 +88,7 @@ async function handleSelfLessons(req, res) {
     console.log(lessons);
     if (lessons && lessons.length > 0) {
       await redis
-        .set(cacheSelf, JSON.stringify(lessons), "ex", 30)
+        .set(cacheSelf, JSON.stringify(lessons), "ex", 60)
         .catch((err) => {
           return res.status(400).send({ msg: err.message });
         });
